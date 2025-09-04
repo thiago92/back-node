@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-COPY .env .env
+# COPY .env .env
 RUN npm run build
 
 # Etapa 2 - Runtime
