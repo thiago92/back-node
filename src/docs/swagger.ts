@@ -16,7 +16,10 @@ const options: swaggerJsdoc.Options = {
       },
     ],
   },
-  apis: ["./src/routes/*.ts"], // Onde buscar os comentários @swagger
+  apis: [ 
+    "./src/routes/*.ts", // dev
+    "./dist/routes/*.js" // prod
+  ], 
 };
 
 const specs = swaggerJsdoc(options);

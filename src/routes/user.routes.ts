@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { 
     makeCreateUserController,
     makeListUserController,
@@ -35,35 +34,6 @@ const router = Router();
  *       500:
  *         description: Erro ao buscar usuários
  */
-
-router.post("/", (req, res) => makeCreateUserController().handle(req, res));
-
-/**
- * @swagger
- * /users/{id}:
- *   get:
- *     summary: Retorna um usuário pelo ID
- *     tags: [Users]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do usuário
- *     responses:
- *       200:
- *         description: Usuário encontrado
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- *       404:
- *         description: Usuário não encontrado
- *       500:
- *         description: Erro ao buscar usuário
- */
-
 router.get("/", (req, res) => makeListUserController().handle(req, res));
 
 /**
@@ -102,7 +72,33 @@ router.get("/", (req, res) => makeListUserController().handle(req, res));
  *       500:
  *         description: Erro ao criar usuário
  */
+router.post("/", (req, res) => makeCreateUserController().handle(req, res));
 
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Retorna um usuário pelo ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: Usuário não encontrado
+ *       500:
+ *         description: Erro ao buscar usuário
+ */
 router.get("/:id", (req, res) => makeGetUserController().handle(req, res));
 
 /**
@@ -144,7 +140,6 @@ router.get("/:id", (req, res) => makeGetUserController().handle(req, res));
  *       500:
  *         description: Erro ao atualizar usuário
  */
-
 router.put("/:id", (req, res) => makeUpdateUserController().handle(req, res));
 
 /**
@@ -168,7 +163,6 @@ router.put("/:id", (req, res) => makeUpdateUserController().handle(req, res));
  *       500:
  *         description: Erro ao deletar usuário
  */
-
 router.delete("/:id", (req, res) => makeDeleteUserController().handle(req, res));
 
 /**
