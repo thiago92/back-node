@@ -2,6 +2,7 @@ import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { User } from "../entities/User";
 import { ENV } from "../config/env";
+import { ErrorLog } from "../entities/Errors";
 
 export const AppDataSource = new DataSource({
   type: ENV.DB_TYPE as any, // "mysql" | "mariadb" | "postgres" | etc
@@ -10,8 +11,8 @@ export const AppDataSource = new DataSource({
   username: ENV.DB_USER,
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
-  entities: [User],
+  entities: [User, ErrorLog],
   migrations: ["src/migrations/*.ts"],
-  synchronize: false, // nunca usar true em produção 🚨
+  synchronize: false, // nunca usar true em produção
   logging: true,
 });

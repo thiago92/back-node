@@ -1,8 +1,14 @@
 import { Router } from "express";
-import { UserController } from "../adapters/controllers/user.controller";
+
+import { 
+    makeCreateUserController,
+    makeListUserController,
+    makeGetUserController,
+    makeUpdateUserController,
+    makeDeleteUserController, 
+} from "../adapters/factories/userControllerFactory";
 
 const router = Router();
-const controller = new UserController();
 
 /**
  * @swagger
@@ -30,7 +36,7 @@ const controller = new UserController();
  *         description: Erro ao buscar usuários
  */
 
-router.get("/", controller.list.bind(controller));
+router.post("/", (req, res) => makeCreateUserController().handle(req, res));
 
 /**
  * @swagger
@@ -58,7 +64,7 @@ router.get("/", controller.list.bind(controller));
  *         description: Erro ao buscar usuário
  */
 
-router.get("/:id", controller.get.bind(controller));
+router.get("/", (req, res) => makeListUserController().handle(req, res));
 
 /**
  * @swagger
@@ -97,7 +103,7 @@ router.get("/:id", controller.get.bind(controller));
  *         description: Erro ao criar usuário
  */
 
-router.post("/", controller.create.bind(controller));
+router.get("/:id", (req, res) => makeGetUserController().handle(req, res));
 
 /**
  * @swagger
@@ -139,7 +145,7 @@ router.post("/", controller.create.bind(controller));
  *         description: Erro ao atualizar usuário
  */
 
-router.put("/:id", controller.update.bind(controller));
+router.put("/:id", (req, res) => makeUpdateUserController().handle(req, res));
 
 /**
  * @swagger
@@ -163,7 +169,7 @@ router.put("/:id", controller.update.bind(controller));
  *         description: Erro ao deletar usuário
  */
 
-router.delete("/:id", controller.delete.bind(controller));
+router.delete("/:id", (req, res) => makeDeleteUserController().handle(req, res));
 
 /**
  * @swagger
