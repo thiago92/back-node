@@ -1,3 +1,4 @@
+import { EmailAlreadyExistsError } from "../errors/EmailAlreadyExistsError";
 import { userRepository } from "../repositories";
 
 export class UserService {
@@ -10,7 +11,15 @@ export class UserService {
   }
 
   async createUser(data: any) {
-    return userRepository.create(data);
+    try {
+      return await userRepository.create(data);
+    } catch (err: any) {
+      // Código do MySQL para duplicidade
+      if (err.code === "ER_DUP_ENTRY") {
+        throw new EmailAlreadyExistsError(data.email);
+      }
+      throw err;
+    }
   }
 
   async updateUser(id: string, data: any) {
