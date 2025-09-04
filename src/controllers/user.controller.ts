@@ -1,70 +1,39 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../data-source/data-source";
-import { User } from "../entities/User";
+import { UserService } from "../services/UserService";
 
-const userRepository = AppDataSource.getRepository(User);
+const service = new UserService();
 
-export const UserController = {
-  getAll: async (req: Request, res: Response) => {
-    try {
-      const users = await userRepository.find();
-      res.json(users);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao buscar usuários" });
-    }
-  },
+export class UserController {
+  async list(req: Request, res: Response) {
+    const users = await service.listUsers();
+    res.json(users);
+  }
 
-  getId: async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "ID do usuário não fornecido" });
-      const user = await userRepository.findOneBy({ id: id });
-      if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
-      res.json(user);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao buscar usuário" });
-    }
-  },
+  async get(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ error: "User ID is required" });
+    const user = await service.getUser(id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  }
 
-  create: async (req: Request, res: Response) => {
-    try {
-      const user = userRepository.create(req.body);
-      await userRepository.save(user);
-      res.status(201).json(user);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao criar usuário" });
-    }
-  },
+  async create(req: Request, res: Response) {
+    const newUser = await service.createUser(req.body);
+    res.status(201).json(newUser);
+  }
 
-  update: async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "ID do usuário não fornecido" });
-      const user = await userRepository.findOneBy({ id: id });
-      if (!user) return res.status(404).json({ error: "Usuário não encontrado" });
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ error: "User ID is required" });
+    const updated = await service.updateUser(id, req.body);
+    if (!updated) return res.status(404).json({ error: "User not found" });
+    res.json(updated);
+  }
 
-      userRepository.merge(user, req.body);
-      await userRepository.save(user);
-      res.json(user);
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao atualizar usuário" });
-    }
-  },
-
-  delete: async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      if (!id) return res.status(400).json({ error: "ID do usuário não fornecido" });
-      const result = await userRepository.delete(id);
-      if (result.affected === 0) return res.status(404).json({ error: "Usuário não encontrado" });
-      res.status(204).send();
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: "Erro ao deletar usuário" });
-    }
-  },
-};
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ error: "User ID is required" });
+    await service.deleteUser(id);
+    res.status(204).send();
+  }
+}

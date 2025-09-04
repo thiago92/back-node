@@ -4,14 +4,14 @@ import { User } from "../entities/User";
 import { ENV } from "../config/env";
 
 export const AppDataSource = new DataSource({
-  type: "mysql",
+  type: ENV.DB_TYPE as any, // "mysql" | "mariadb" | "postgres" | etc
   host: ENV.DB_HOST,
-  port: 3306,
+  port: parseInt(ENV.DB_PORT, 10),
   username: ENV.DB_USER,
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
   entities: [User],
   migrations: ["src/migrations/*.ts"],
-  synchronize: false,
+  synchronize: false, // nunca usar true em produção 🚨
   logging: true,
 });

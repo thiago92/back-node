@@ -2,6 +2,7 @@ import { Router } from "express";
 import { UserController } from "../controllers/user.controller";
 
 const router = Router();
+const controller = new UserController();
 
 /**
  * @swagger
@@ -29,7 +30,7 @@ const router = Router();
  *         description: Erro ao buscar usuários
  */
 
-router.get("/", UserController.getAll);
+router.get("/", controller.list.bind(controller));
 
 /**
  * @swagger
@@ -57,7 +58,7 @@ router.get("/", UserController.getAll);
  *         description: Erro ao buscar usuário
  */
 
-router.get("/:id", UserController.getId);
+router.get("/:id", controller.get.bind(controller));
 
 /**
  * @swagger
@@ -96,7 +97,7 @@ router.get("/:id", UserController.getId);
  *         description: Erro ao criar usuário
  */
 
-router.post("/", UserController.create);
+router.post("/", controller.create.bind(controller));
 
 /**
  * @swagger
@@ -138,7 +139,7 @@ router.post("/", UserController.create);
  *         description: Erro ao atualizar usuário
  */
 
-router.put("/:id", UserController.update);
+router.put("/:id", controller.update.bind(controller));
 
 /**
  * @swagger
@@ -162,7 +163,7 @@ router.put("/:id", UserController.update);
  *         description: Erro ao deletar usuário
  */
 
-router.delete("/:id", UserController.delete);
+router.delete("/:id", controller.delete.bind(controller));
 
 /**
  * @swagger
