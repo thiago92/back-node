@@ -11,9 +11,8 @@ const options: swaggerJsdoc.Options = {
       description: "API de exemplo com CRUD de usuários e documentação Swagger",
     },
     servers: [
-      {
-        url: process.env.SWAGGER_URL || "http://localhost:3000",
-      },
+        { url: "http://localhost:3000", description: "Local" },
+        { url: "https://back-node-zr66.onrender.com", description: "Produção" },
     ],
   },
   apis: [ 

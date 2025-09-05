@@ -1,6 +1,9 @@
 import { app } from "./app";
 import { AppDataSource } from "./data-source/data-source";
 import { ENV } from "./config/env";
+import cors from "cors";
+
+app.use(cors());
 
 const PORT = ENV.PORT || 3000;
 
