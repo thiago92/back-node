@@ -1,6 +1,6 @@
 import { app } from "./app";
-import { AppDataSource } from "./data-source/data-source";
-import { ENV } from "./config/env";
+import { AppDataSource } from "./infrastructure/database/config/data-source";
+import { ENV } from "./infrastructure/config/env";
 import cors from "cors";
 
 app.use(cors());

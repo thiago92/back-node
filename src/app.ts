@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { setupSwagger } from "./docs/swagger";
-import userRoutes from "./routes/user.routes";
-import testRoutes from "./routes/test.routes";
+import { setupSwagger } from "./presentation/docs/swagger";
+import userRoutes from "./infrastructure/http/routes/user.routes";
+import testRoutes from "./infrastructure/http/routes/test.routes";
 
 const app = express();
 
