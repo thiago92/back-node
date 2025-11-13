@@ -16,8 +16,8 @@ const options: swaggerJsdoc.Options = {
     ],
   },
   apis: [ 
-    "./src/routes/*.ts", // dev
-    "./dist/routes/*.js" // prod
+    "./src/infrastructure/http/routes/*.ts", // dev
+    "./dist/infrastructure/http/routes/*.js" // prod
   ], 
 };
 
