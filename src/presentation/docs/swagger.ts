@@ -12,7 +12,7 @@ const options: swaggerJsdoc.Options = {
     },
     servers: [
         { url: "http://localhost:3000", description: "Local" },
-        //{ url: "https://back-node-zr66.onrender.com", description: "Produção" },
+        { url: "https://back-node-zr66.onrender.com", description: "Produção" },
     ],
   },
   apis: [ 

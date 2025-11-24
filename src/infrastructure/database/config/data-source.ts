@@ -3,6 +3,7 @@ import { DataSource } from "typeorm";
 import { User } from "../../../domain/entities/User";
 import { ENV } from "../../config/env";
 import { ErrorLog } from "../../../domain/entities/Errors";
+import { Progress } from "../../../domain/entities/Progress";
 
 export const AppDataSource = new DataSource({
   type: ENV.DB_TYPE as any, // "mysql" | "mariadb" | "postgres" | etc
@@ -11,8 +12,8 @@ export const AppDataSource = new DataSource({
   username: ENV.DB_USER,
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
-  entities: [User, ErrorLog],
-  migrations: ["src/migrations/*.ts"],
+  entities: [User, ErrorLog, Progress],
+  migrations: ["src/infrastructure/migrations/*.ts"],
   synchronize: false, // nunca usar true em produção
   logging: true,
 });
