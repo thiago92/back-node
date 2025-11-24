@@ -13,7 +13,7 @@ export const AppDataSource = new DataSource({
   password: ENV.DB_PASS,
   database: ENV.DB_NAME,
   entities: [User, ErrorLog, Progress],
-  migrations: ["src/infrastructure/migrations/*.ts"],
+  migrations: ["src/migrations/*.ts"],
   synchronize: false, // nunca usar true em produção
   logging: true,
 });
